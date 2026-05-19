@@ -1,0 +1,39 @@
+{
+  "videos": [
+    {
+      "id": "b001acb2-27b6-4f1d-804d-4f37c4ea0b3b",
+      "title": "(Mock) Vídeo extraído do link: https://www.youtube.com/watch?v=QiGh9M_EZWs",
+      "filename": "b001acb2-27b6-4f1d-804d-4f37c4ea0b3b.mp4",
+      "uploader": "admin",
+      "createdAt": "2026-05-19T17:39:09.926Z"
+    },
+    {
+      "id": "db12268f-c411-4b9b-9109-a347503ea049",
+      "title": "(Mock) Vídeo extraído do link: https://www.youtube.com/watch?v=QiGh9M_EZWs",
+      "filename": "db12268f-c411-4b9b-9109-a347503ea049.mp4",
+      "uploader": "admin",
+      "createdAt": "2026-05-19T17:40:01.227Z"
+    },
+    {
+      "id": "63a19578-999e-40d5-9fd7-46f00ab79ab5",
+      "title": "Gastei tokens pra você não gastar.",
+      "filename": "63a19578-999e-40d5-9fd7-46f00ab79ab5.mp4",
+      "uploader": "admin",
+      "createdAt": "2026-05-19T18:03:11.928Z"
+    },
+    {
+      "id": "b9a910c9-60b1-4a0c-bf81-c7f8260a8dec",
+      "title": "Gastei tokens pra você não gastar.",
+      "filename": "b9a910c9-60b1-4a0c-bf81-c7f8260a8dec.mp4",
+      "uploader": "admin",
+      "createdAt": "2026-05-19T18:06:08.778Z"
+    },
+    {
+      "id": "91a7b37f-e99f-4985-bc52-fee103aaadc7",
+      "title": "Gastei tokens pra você não gastar.",
+      "filename": "91a7b37f-e99f-4985-bc52-fee103aaadc7.mp4",
+      "uploader": "admin",
+      "createdAt": "2026-05-19T18:08:37.354Z"
+    }
+  ]
+}
