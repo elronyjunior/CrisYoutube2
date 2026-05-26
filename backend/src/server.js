@@ -1,11 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
+import path from 'path';
 import { VideoFacade } from './patterns/facade/VideoFacade.js';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 const upload = multer({ storage: multer.memoryStorage() });
 const facade = new VideoFacade();
@@ -42,12 +44,14 @@ app.post('/api/videos/upload-local', upload.single('video'), async (req, res) =>
 app.post('/api/videos/upload-youtube', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
+    // debug: log incoming body to help diagnose "Invalid URL"
+    console.log('upload-youtube body:', req.body);
     const { url } = req.body;
     const video = await facade.uploadYouTubeVideo(token, url);
     res.status(201).json(video);
   } catch (error) {
     res.status(400).json({ error: error.message });
-    console.error("❌ Erro no Adapter do YouTube:", error.message); // <-- Adicione este lo
+    console.error("❌ Erro no Adapter do YouTube:", error);
   }
 });
 

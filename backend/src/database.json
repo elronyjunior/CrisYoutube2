@@ -1,39 +1,40 @@
 {
   "videos": [
     {
-      "id": "b001acb2-27b6-4f1d-804d-4f37c4ea0b3b",
-      "title": "(Mock) Vídeo extraído do link: https://www.youtube.com/watch?v=QiGh9M_EZWs",
-      "filename": "b001acb2-27b6-4f1d-804d-4f37c4ea0b3b.mp4",
+      "id": "7b3dc6ec-9c4c-446a-9906-cdcf24a7f18f",
+      "title": "Desafio $50 vs. $500 (feat. @ErickJacquin)",
+      "filename": "7b3dc6ec-9c4c-446a-9906-cdcf24a7f18f.mp4",
       "uploader": "admin",
-      "createdAt": "2026-05-19T17:39:09.926Z"
+      "createdAt": "2026-05-25T23:40:40.174Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/0l-CJd2Oeyw/maxresdefault.webp",
+      "sourceType": "youtube"
     },
     {
-      "id": "db12268f-c411-4b9b-9109-a347503ea049",
-      "title": "(Mock) Vídeo extraído do link: https://www.youtube.com/watch?v=QiGh9M_EZWs",
-      "filename": "db12268f-c411-4b9b-9109-a347503ea049.mp4",
+      "id": "d0772cae-08bd-4436-9af6-d1c6956751e9",
+      "title": "Spec-Driven Development: O Fim do Vibe Coding",
+      "filename": "d0772cae-08bd-4436-9af6-d1c6956751e9.mp4",
       "uploader": "admin",
-      "createdAt": "2026-05-19T17:40:01.227Z"
+      "createdAt": "2026-05-25T23:44:45.375Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/cAcGrs7RHBM/maxresdefault.webp",
+      "sourceType": "youtube"
     },
     {
-      "id": "63a19578-999e-40d5-9fd7-46f00ab79ab5",
-      "title": "Gastei tokens pra você não gastar.",
-      "filename": "63a19578-999e-40d5-9fd7-46f00ab79ab5.mp4",
+      "id": "1925d664-55c9-4d28-bd17-7c9fba6ebcd0",
+      "title": "O LIVRO QUE TODO PROGRAMADOR PRECISA LER!",
+      "filename": "1925d664-55c9-4d28-bd17-7c9fba6ebcd0.mp4",
       "uploader": "admin",
-      "createdAt": "2026-05-19T18:03:11.928Z"
+      "createdAt": "2026-05-25T23:56:49.008Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/i98cIh6x_CI/maxresdefault.webp",
+      "sourceType": "youtube"
     },
     {
-      "id": "b9a910c9-60b1-4a0c-bf81-c7f8260a8dec",
-      "title": "Gastei tokens pra você não gastar.",
-      "filename": "b9a910c9-60b1-4a0c-bf81-c7f8260a8dec.mp4",
+      "id": "040fee5a-593d-48a9-aa73-86d252e0889c",
+      "title": "FIZEMOS a BOLA PERFEITA de FIGURINHAS da COPA!",
+      "filename": "040fee5a-593d-48a9-aa73-86d252e0889c.mp4",
       "uploader": "admin",
-      "createdAt": "2026-05-19T18:06:08.778Z"
-    },
-    {
-      "id": "91a7b37f-e99f-4985-bc52-fee103aaadc7",
-      "title": "Gastei tokens pra você não gastar.",
-      "filename": "91a7b37f-e99f-4985-bc52-fee103aaadc7.mp4",
-      "uploader": "admin",
-      "createdAt": "2026-05-19T18:08:37.354Z"
+      "createdAt": "2026-05-26T00:01:10.392Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/UDHpgQtc2us/maxresdefault.webp",
+      "sourceType": "youtube"
     }
   ]
 }

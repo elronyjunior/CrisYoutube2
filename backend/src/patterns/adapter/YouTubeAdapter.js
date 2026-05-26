@@ -1,12 +1,28 @@
 import { IVideoSource } from './IVideoSource.js';
-import { exec } from 'child_process';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 import fs from 'fs/promises';
+import os from 'os';
 import path from 'path';
-import util from 'util';
-// Aumentamos o maxBuffer para 10MB (10 * 1024 * 1024)
-const execPromise = util.promisify((cmd, callback) => {
-  exec(cmd, { maxBuffer: 10 * 1024 * 1024 }, callback);
-});
+
+const execFileAsync = promisify(execFile);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const ROOT_DIR = path.resolve(__dirname, '../../..');
+const YTDLP_PATH = path.join(ROOT_DIR, 'yt-dlp.exe');
+
+function extractYouTubeId(url) {
+  const match = url.match(/(?:v=|youtu\.be\/|\/embed\/)([A-Za-z0-9_-]{11})/);
+  return match?.[1] ?? null;
+}
+
+function sanitizeTitle(title) {
+  return title
+    .replace(/[^a-z0-9]+/gi, '_')
+    .replace(/^_+|_+$/g, '')
+    .toLowerCase() || 'youtube_video';
+}
 
 export class YouTubeAdapter extends IVideoSource {
   constructor(url) {
@@ -14,51 +30,72 @@ export class YouTubeAdapter extends IVideoSource {
     this.url = url;
   }
 
-  async getBuffer() {
-    const tempFileName = `temp_${Date.now()}.mp4`;
-    const tempPath = path.join(process.cwd(), 'uploads', 'temp', tempFileName);
-    const ytDlpPath = path.join(process.cwd(), 'yt-dlp.exe'); 
-    const cookiesPath = path.join(process.cwd(), 'cookies.txt');
-
-    // 🪄 Alteração aqui: -f "18/b[ext=mp4]"
-    // Tenta primeiro o código 18 (MP4 universal com áudio). Se falhar, procura o melhor MP4 disponível.
-    const command = `"${ytDlpPath}" --js-runtimes node --cookies "${cookiesPath}" -f "18/b[ext=mp4]" -o "${tempPath}" "${this.url}"`;
-
-    try {
-      console.log('A descarregar formato MP4 nativo (código 18)...');
-      await execPromise(command);
-      
-      const buffer = await fs.readFile(tempPath);
-      await fs.unlink(tempPath); 
-      
-      return buffer;
-    } catch (error) {
-      throw new Error(`Falha no yt-dlp a descarregar: ${error.message}`);
+  async _runYtdlp(args) {
+    const exists = await fs.access(YTDLP_PATH).then(() => true).catch(() => false);
+    if (!exists) {
+      throw new Error(`yt-dlp não encontrado em: ${YTDLP_PATH}`);
     }
+    const { stdout, stderr } = await execFileAsync(YTDLP_PATH, args, { windowsHide: true });
+    if (stderr) {
+      const output = stderr.trim();
+      if (output.length > 0 && !output.includes('WARNING')) {
+        throw new Error(output);
+      }
+    }
+    return stdout;
   }
 
   async getMetadata() {
-    const ytDlpPath = path.join(process.cwd(), 'yt-dlp.exe');
-    const cookiesPath = path.join(process.cwd(), 'cookies.txt');
-    
-    // O Node também é usado aqui para ler as informações corretamente
-    const command = `"${ytDlpPath}" --js-runtimes node --cookies "${cookiesPath}" --dump-json "${this.url}"`;
+    const stdout = await this._runYtdlp([
+      '--dump-single-json',
+      '--no-warnings',
+      '--no-check-certificate',
+      '--no-playlist',
+      this.url
+    ]);
 
+    const info = JSON.parse(stdout);
+    const thumbnail = info.thumbnails?.slice(-1)[0]?.url
+      || (info.id ? `https://img.youtube.com/vi/${info.id}/hqdefault.jpg` : null);
+    const safeTitle = sanitizeTitle(info.title || info.id || 'youtube_video');
+    const ext = info.ext || 'mp4';
+
+    return {
+      filename: `youtube_${safeTitle}.${ext}`,
+      mimetype: `video/${ext}`,
+      size: info.filesize || null,
+      title: info.title || info.id || 'YouTube Video',
+      thumbnail,
+      sourceType: 'youtube'
+    };
+  }
+
+  async getBuffer() {
+    const metadata = await this.getMetadata();
+    const tempFolder = os.tmpdir();
+    const tempBaseName = `youtube-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const outputPattern = path.join(tempFolder, `${tempBaseName}.%(ext)s`);
+
+    await this._runYtdlp([
+      '--no-warnings',
+      '--no-check-certificate',
+      '--no-playlist',
+      '--format', 'best[ext=mp4]/best',
+      '--output', outputPattern,
+      this.url
+    ]);
+
+    const downloaded = (await fs.readdir(tempFolder)).find((name) => name.startsWith(`${tempBaseName}.`));
+    if (!downloaded) {
+      throw new Error('Falha ao localizar o arquivo baixado pelo yt-dlp.');
+    }
+
+    const tempFilePath = path.join(tempFolder, downloaded);
     try {
-      console.log('Resolvendo criptografia para ler metadados...');
-      const { stdout } = await execPromise(command);
-      const info = JSON.parse(stdout);
-      
-      const safeTitle = info.title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-
-      return {
-        filename: `youtube_${safeTitle}.mp4`,
-        mimetype: 'video/mp4',
-        size: null, 
-        title: info.title
-      };
-    } catch (error) {
-      throw new Error(`Falha no yt-dlp ao ler metadados: ${error.message}`);
+      const fileBuffer = await fs.readFile(tempFilePath);
+      return fileBuffer;
+    } finally {
+      await fs.unlink(tempFilePath).catch(() => null);
     }
   }
 }

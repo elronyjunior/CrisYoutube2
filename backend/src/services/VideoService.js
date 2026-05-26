@@ -9,7 +9,9 @@ export class VideoService {
   async save(videoSource, user) {
     const metadata = await videoSource.getMetadata();
     const buffer = await videoSource.getBuffer();
-    
+
+    await fs.mkdir(UPLOADS_DIR, { recursive: true });
+
     const videoId = uuidv4();
     const fileName = `${videoId}.mp4`;
     const filePath = path.join(UPLOADS_DIR, fileName);
@@ -22,9 +24,11 @@ export class VideoService {
       title: metadata.title,
       filename: fileName,
       uploader: user.username,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      thumbnail: metadata.thumbnail || null,
+      sourceType: metadata.sourceType || 'local'
     };
-    
+
     if (!db.videos) db.videos = [];
     db.videos.push(newVideo);
     await writeDb(db);
