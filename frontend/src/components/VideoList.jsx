@@ -80,24 +80,64 @@ export default function VideoList({ videos, loading }) {
           <div style={{
             padding: '1.5rem'
           }}>
-            <h3 style={{
-              margin: '0 0 0.75rem',
-              color: '#111',
-              fontSize: '1.3rem',
-              fontWeight: '700'
-            }}>
-              {currentVideo.title}
-            </h3>
+            {/* Título e Badge de Origem */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  margin: '0 0 0.5rem',
+                  color: '#111',
+                  fontSize: '1.3rem',
+                  fontWeight: '700'
+                }}>
+                  {currentVideo.titleCleaned || currentVideo.title}
+                </h3>
+              </div>
+              {/* Badge de Origem */}
+              {currentVideo.originBadge && (
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.5rem 0.75rem',
+                  borderRadius: '999px',
+                  background: currentVideo.originBadge.color + '20',
+                  border: `2px solid ${currentVideo.originBadge.color}`,
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  color: currentVideo.originBadge.color,
+                  whiteSpace: 'nowrap'
+                }}>
+                  <span>{currentVideo.originBadge.emoji}</span>
+                  <span>{currentVideo.originBadge.label.split(' ')[1]}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Info Row 1 */}
             <div style={{
               display: 'flex',
-              gap: '1rem',
+              gap: '1.5rem',
               flexWrap: 'wrap',
               color: '#666',
-              fontSize: '0.9rem'
+              fontSize: '0.9rem',
+              marginBottom: '0.75rem'
             }}>
               <span>👤 {currentVideo.uploader}</span>
-              <span>📅 {new Date(currentVideo.createdAt).toLocaleDateString('pt-BR')}</span>
-              <span>🕐 {new Date(currentVideo.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>
+              {currentVideo.durationFormatted && <span>⏱️ {currentVideo.durationFormatted}</span>}
+              {currentVideo.viewsFormatted && <span>👁️ {currentVideo.viewsFormatted}</span>}
+            </div>
+
+            {/* Info Row 2 */}
+            <div style={{
+              display: 'flex',
+              gap: '1.5rem',
+              flexWrap: 'wrap',
+              color: '#999',
+              fontSize: '0.85rem'
+            }}>
+              <span>📅 {currentVideo.createdAtFormatted || new Date(currentVideo.createdAt).toLocaleDateString('pt-BR')}</span>
+              {currentVideo.sizeFormatted && <span>💾 {currentVideo.sizeFormatted}</span>}
+              {currentVideo.createdAtRelative && <span>⏰ {currentVideo.createdAtRelative}</span>}
             </div>
           </div>
         </div>
@@ -219,8 +259,9 @@ export default function VideoList({ videos, loading }) {
 
               {/* Info */}
               <div style={{ padding: '1rem' }}>
+                {/* Título limpo */}
                 <h3 style={{
-                  margin: '0 0 0.75rem',
+                  margin: '0 0 0.5rem',
                   fontSize: '0.95rem',
                   lineHeight: '1.4',
                   color: '#111',
@@ -231,17 +272,88 @@ export default function VideoList({ videos, loading }) {
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical'
                 }}>
-                  {video.title}
+                  {video.titleCleaned || video.title}
                 </h3>
+
+                {/* Badges: origem + duração + views */}
+                <div style={{ marginBottom: '0.5rem' }}>
+                  {video.originBadge && (
+                    <div style={{
+                      display: 'inline-block',
+                      fontSize: '0.7rem',
+                      fontWeight: '600',
+                      padding: '0.3rem 0.6rem',
+                      borderRadius: '999px',
+                      background: video.originBadge.color + '25',
+                      color: video.originBadge.color,
+                      marginRight: '0.3rem',
+                      marginBottom: '0.3rem'
+                    }}>
+                      {video.originBadge.emoji} {video.originBadge.label.split(' ')[1]}
+                    </div>
+                  )}
+                  {video.durationFormatted && (
+                    <div style={{
+                      display: 'inline-block',
+                      fontSize: '0.7rem',
+                      fontWeight: '600',
+                      padding: '0.3rem 0.6rem',
+                      borderRadius: '999px',
+                      background: '#4ECDC425',
+                      color: '#4ECDC4',
+                      marginRight: '0.3rem',
+                      marginBottom: '0.3rem'
+                    }}>
+                      ⏱️ {video.durationFormatted}
+                    </div>
+                  )}
+                  {video.viewsFormatted && (
+                    <div style={{
+                      display: 'inline-block',
+                      fontSize: '0.7rem',
+                      fontWeight: '600',
+                      padding: '0.3rem 0.6rem',
+                      borderRadius: '999px',
+                      background: video.viewsBadge?.color ? video.viewsBadge.color + '25' : '#F39C1225',
+                      color: video.viewsBadge?.color || '#F39C12',
+                      marginBottom: '0.3rem'
+                    }}>
+                      {video.viewsBadge?.emoji || '👁️'} {video.viewsFormatted}
+                    </div>
+                  )}
+                </div>
+
+                {/* Info row 1: Uploader + Tamanho + Views */}
                 <div style={{
                   fontSize: '0.8rem',
-                  color: '#999',
+                  color: '#666',
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.25rem'
+                  gap: '0.5rem',
+                  marginBottom: '0.25rem',
+                  alignItems: 'center',
+                  flexWrap: 'wrap'
                 }}>
-                  <span>{video.uploader}</span>
-                  <span>{new Date(video.createdAt).toLocaleDateString('pt-BR')}</span>
+                  <span>👤 {video.uploader}</span>
+                  {video.sizeFormatted && (
+                    <>
+                      <span style={{ color: '#ddd' }}>•</span>
+                      <span>💾 {video.sizeFormatted}</span>
+                    </>
+                  )}
+                  {video.viewsFormatted && (
+                    <>
+                      <span style={{ color: '#ddd' }}>•</span>
+                      <span>👁️ {video.viewsFormatted}</span>
+                    </>
+                  )}
+                </div>
+
+                {/* Info row 2: Data relativa */}
+                <div style={{
+                  fontSize: '0.75rem',
+                  color: '#999'
+                }}>
+                  ⏱️ {video.createdAtRelative || 'agora'}
                 </div>
               </div>
             </button>

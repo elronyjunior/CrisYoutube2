@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { readDb, writeDb } from '../db.js';
+import { VideoDecoratorFactory } from '../patterns/decorator/VideoDecoratorFactory.js';
 
 const UPLOADS_DIR = path.join(process.cwd(), 'uploads', 'videos');
 
@@ -26,18 +27,25 @@ export class VideoService {
       uploader: user.username,
       createdAt: new Date().toISOString(),
       thumbnail: metadata.thumbnail || null,
-      sourceType: metadata.sourceType || 'local'
+      sourceType: metadata.sourceType || 'local',
+      size: metadata.size || 0
     };
 
     if (!db.videos) db.videos = [];
     db.videos.push(newVideo);
     await writeDb(db);
 
-    return newVideo;
+    // Aplica todos os decorators ao vídeo antes de retornar
+    const decoratedVideo = VideoDecoratorFactory.applyAllDecorators(newVideo);
+
+    return decoratedVideo;
   }
 
   async listAll() {
     const db = await readDb();
-    return db.videos || [];
+    const videos = db.videos || [];
+    
+    // Aplica decorators a todos os vídeos antes de retornar
+    return videos.map(video => VideoDecoratorFactory.applyAllDecorators(video));
   }
 }

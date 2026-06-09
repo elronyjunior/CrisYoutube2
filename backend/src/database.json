@@ -1,5 +1,60 @@
 {
   "videos": [
-   
+    {
+      "id": "9a58d54b-bbfe-4a1a-bce9-6909643a0c88",
+      "title": "Padrão de Projeto Adapter: Melhore sua Orientação a Objetos e Testes Unitários! Design Pattern (GOF)",
+      "filename": "9a58d54b-bbfe-4a1a-bce9-6909643a0c88.mp4",
+      "uploader": "admin",
+      "createdAt": "2026-05-26T17:04:57.095Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/Fg1kEjaaBrs/maxresdefault.webp",
+      "sourceType": "youtube"
+    },
+    {
+      "id": "d6c21bda-48fd-48d5-9045-052f7580d1ac",
+      "title": "Padrão de Projeto Proxy: Melhore a Arquitetura do Seu Código Usando Orientação a Objetos!",
+      "filename": "d6c21bda-48fd-48d5-9045-052f7580d1ac.mp4",
+      "uploader": "Relampago marquinhos",
+      "createdAt": "2026-05-26T17:05:27.610Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/el1MtIPXTqo/maxresdefault.webp",
+      "sourceType": "youtube"
+    },
+    {
+      "id": "399c645a-cc60-44fb-9aac-4b823c0db88e",
+      "title": "Montei 3 Setups completos de Magic custo-benefício",
+      "filename": "399c645a-cc60-44fb-9aac-4b823c0db88e.mp4",
+      "uploader": "Elza Frozen",
+      "createdAt": "2026-05-26T17:13:00.879Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/iDo0y3ODwss/maxresdefault.webp",
+      "sourceType": "youtube"
+    },
+    {
+      "id": "d57728a0-1f82-4b3a-aa4a-a92f383893db",
+      "title": "COMPREI O MEU PRÓPRIO PRESENTE DE ANIVERSÁRIO!",
+      "filename": "d57728a0-1f82-4b3a-aa4a-a92f383893db.mp4",
+      "uploader": "Marcos",
+      "createdAt": "2026-05-26T17:45:48.268Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/Yv2GtM26uBI/maxresdefault.webp",
+      "sourceType": "youtube"
+    },
+    {
+      "id": "cbd0a4bb-294b-4476-88c6-e608a1c853a0",
+      "title": "9a58d54b-bbfe-4a1a-bce9-6909643a0c88",
+      "filename": "cbd0a4bb-294b-4476-88c6-e608a1c853a0.mp4",
+      "uploader": "admin",
+      "createdAt": "2026-06-09T16:59:46.383Z",
+      "thumbnail": null,
+      "sourceType": "local",
+      "size": 30944336
+    },
+    {
+      "id": "1bf49454-a7a0-4076-bb03-bd9c54227350",
+      "title": "A GERAÇÃO QUE NÃO VAI TER CARRO, CASA E NÃO VAI SE APOSENTAR",
+      "filename": "1bf49454-a7a0-4076-bb03-bd9c54227350.mp4",
+      "uploader": "admin",
+      "createdAt": "2026-06-09T17:04:32.262Z",
+      "thumbnail": "https://i.ytimg.com/vi_webp/B0IRXCb6NTM/maxresdefault.webp",
+      "sourceType": "youtube",
+      "size": 128437559
+    }
   ]
 }

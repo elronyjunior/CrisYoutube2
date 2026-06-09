@@ -1,0 +1,160 @@
+/* Estilos para Dados Decorados */
+
+/* Badge de Origem */
+.origin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.origin-badge.youtube {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff0000;
+  border: 2px solid #ff0000;
+}
+
+.origin-badge.youtube:hover {
+  background: rgba(255, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.origin-badge.local {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+  border: 2px solid #4caf50;
+}
+
+.origin-badge.local:hover {
+  background: rgba(76, 175, 80, 0.2);
+  transform: scale(1.05);
+}
+
+/* Info Grid dos Dados Decorados */
+.video-info-decorated {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+}
+
+.video-info-decorated .info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.video-info-decorated .info-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.video-info-decorated .info-value {
+  font-size: 0.95rem;
+  color: #111;
+  font-weight: 600;
+}
+
+/* Animações */
+@keyframes badgePopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.origin-badge {
+  animation: badgePopIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Card Grid Melhorado */
+.video-card-decorated {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.video-card-decorated::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-card-decorated:hover::after {
+  opacity: 1;
+}
+
+/* Tags de dados formatados */
+.data-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.data-tag:hover {
+  background: rgba(102, 126, 234, 0.2);
+  transform: translateY(-2px);
+}
+
+.data-tag.size {
+  background: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+}
+
+.data-tag.size:hover {
+  background: rgba(52, 211, 153, 0.2);
+}
+
+.data-tag.date {
+  background: rgba(96, 165, 250, 0.1);
+  color: #60a5fa;
+}
+
+.data-tag.date:hover {
+  background: rgba(96, 165, 250, 0.2);
+}
+
+/* Spinner de carregamento */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
